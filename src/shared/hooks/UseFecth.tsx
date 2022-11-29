@@ -14,7 +14,6 @@ const headers = {
 
 const options = (verb = HTTP_METHODS.GET, body: string): RequestInit => {
   if (verb === HTTP_METHODS.POST || verb === HTTP_METHODS.PATCH) {
-    console.log("here")
     return {
       method: verb,
       headers: headers,
@@ -50,10 +49,10 @@ export function useInitialFetch(url: string) {
         setData(result);
       } catch (error) {
         console.error(error);
-        setError(error as string);
-      } finally {
         setIsLoading(false);
-      }
+      
+        setError(error as string);
+      } 
     };
 
     // Call to use Async and Wait Structure
@@ -71,7 +70,7 @@ export function useInitialFetch(url: string) {
 export function useFetch() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null || "");
 
   //Abort Fetch
   const controller = new AbortController();
@@ -91,18 +90,19 @@ export function useFetch() {
         signal: controller.signal,
       });
       const result = await response.json();
+      if(!response.ok) throw new Error(result.message)
+      setIsLoading(false);
       setData(result);
     } catch (error) {
       console.error(error);
-      setError(error as string);
-    } finally {
       setIsLoading(false);
-    }
+      setError(error as string);
+    } 
   };
 
   const cancelFetch = () => {
     controller.abort();
   };
 
-  return [data, executeFetch, cancelFetch, isLoading, error];
+  return [data, executeFetch, cancelFetch, isLoading, error, setError];
 }

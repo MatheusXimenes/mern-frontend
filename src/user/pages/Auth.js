@@ -13,12 +13,12 @@ import { AuthContext } from "../../shared/context/auth-context";
 import "./Auth.css";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import { useFetch } from "../../shared/hooks/UseFecth";
 
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const [data, executeFetch, cancelFetch, isLoading, error] = useFetch();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -63,27 +63,35 @@ const Auth = () => {
 
     if (isLoginMode) {
     } else {
-      await executeFetch(
-        `${process.env.REACT_APP_BACK_END_DOMAIN}:${process.env.REACT_APP_BACK_END_PORT}/api/users/signup`,
-        "POST",
-        JSON.stringify({
-          name: formState.inputs.name.value,
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value,
-        })
-      );
-      auth.login();
+      try {
+        setIsLoading(true);
+        const response = await fetch("http://localhost:5000/api/users/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+        });
+
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+        setIsLoading(false);
+        auth.login();
+      } catch (err) {
+        setIsLoading(false);
+        setError(err.message || "Something went wrong, please try again.");
+      }
     }
   };
-
   return (
     <>
-      {error && (
-        <ErrorModal
-          onClear={() => {} /*setError(null)*/}
-          show={error}
-        ></ErrorModal>
-      )}
+      <ErrorModal error={error} onClear={() => setError(null)} />
       <Card className="authentication">
         <h2>Login Required</h2>
         <hr />
