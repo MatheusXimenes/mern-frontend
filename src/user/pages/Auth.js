@@ -64,7 +64,7 @@ const Auth = () => {
     if (isLoginMode) {
     } else {
       await executeFetch(
-        `http://localhost:5000/api/users/signup`,
+        `http://${process.env.DOMAIN}/api/users/signup`,
         "POST",
         JSON.stringify({
           name: formState.inputs.name.value,
