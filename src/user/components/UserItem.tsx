@@ -1,11 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { IUser } from '../../models/UserModel';
 
 import Avatar from '../../shared/components/UIElements/Avatar';
 import Card from '../../shared/components/UIElements/Card';
 import './UserItem.css';
 
-const UserItem = props => {
+type userItemProps = {
+  id: number,
+  image: string,
+  name: string,
+  placeCount: number
+}
+
+const UserItem = (props:userItemProps) => {
   return (
     <li className="user-item">
       <Card className="user-item__content">

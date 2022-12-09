@@ -2,6 +2,9 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 import PlaceList from "../components/PlaceList";
+type Params = {
+  userId: string
+}
 
 const dummy_places = [
   {
@@ -33,7 +36,7 @@ const dummy_places = [
 ];
 
 const UserPlaces = () => {
-  const userId = useParams().userId;
+  const userId = useParams<Params>().userId;
   const loadedPlaces = dummy_places.filter((place) => place.creator === userId);
   return <PlaceList items={loadedPlaces} />;
 };

@@ -13,12 +13,18 @@ import { AuthContext } from "../../shared/context/auth-context";
 import "./Auth.css";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import { HTTP_METHODS, useFetch } from "../../shared/hooks/UseFetch";
+import { getEndPoint, UserAPIs } from "../../api/api";
+
+enum AppState {
+  SIGN_UP = "Sign up",
+  LOGIN = "Login"
+}
 
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  const {fetchData, isLoading, error, clearError} = useFetch();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -58,40 +64,41 @@ const Auth = () => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
-  const authSubmitHandler = async (event) => {
+  const authSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    
     if (isLoginMode) {
-    } else {
-      try {
-        setIsLoading(true);
-        const response = await fetch("http://localhost:5000/api/users/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+     
+      const user = await fetchData(
+        getEndPoint + UserAPIs.LoginUser,
+          HTTP_METHODS.POST,
+          {
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
           },
-          body: JSON.stringify({
+        );
+        if(user?.hasOwnProperty("_id")) {
+          auth.login();
+        }
+    } else {
+      
+        const user = await fetchData(
+          getEndPoint + UserAPIs.SignUpUser, 
+          HTTP_METHODS.POST, 
+          {
             name: formState.inputs.name.value,
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
-          }),
-        });
-
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
+          });
+        
+        if(user?.hasOwnProperty("_id")) {
+          auth.login();
         }
-        setIsLoading(false);
-        auth.login();
-      } catch (err) {
-        setIsLoading(false);
-        setError(err.message || "Something went wrong, please try again.");
-      }
     }
   };
   return (
     <>
-      <ErrorModal error={error} onClear={() => setError(null)} />
+      <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         <h2>Login Required</h2>
         <hr />
@@ -129,12 +136,12 @@ const Auth = () => {
               onInput={inputHandler}
             />
             <Button type="submit" disabled={!formState.isValid}>
-              {isLoginMode ? "LOGIN" : "SIGNUP"}
+              {isLoginMode ? AppState.LOGIN : AppState.SIGN_UP}
             </Button>
           </form>
         )}
         <Button inverse onClick={switchModeHandler} disabled={isLoading}>
-          SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
+          Switch to {isLoginMode ? AppState.SIGN_UP :  AppState.LOGIN}
         </Button>
       </Card>
     </>
