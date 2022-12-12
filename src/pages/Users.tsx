@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import { useFetch } from "../../shared/hooks/UseFetch";
-import { IUser } from "../../models/UserModel";
+import ErrorModal from "../components/UIElements/ErrorModal";
+import LoadingSpinner from "../components/UIElements/LoadingSpinner";
+import { useFetch } from "../shared/hooks/UseFetch";
+import { IUser } from "../models/UserModel";
 
-import UsersList from "../components/UsersList";
-import { getEndPoint, UserAPIs } from "../../api/api";
+import UsersList from "../components/Users/UsersList";
+import { getEndPoint, UserAPIs } from "../api/api";
 
 const Users: FC = () => {
   const [data, setData] = useState<IUser[]>([]);

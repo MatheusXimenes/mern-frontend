@@ -1,20 +1,16 @@
 import React, { useState, useContext } from "react";
+import { getEndPoint, UserAPIs } from "../api/api";
+import Button from "../components/FormElements/Button";
+import Input from "../components/FormElements/Input";
+import Card from "../components/UIElements/Card";
+import ErrorModal from "../components/UIElements/ErrorModal";
+import LoadingSpinner from "../components/UIElements/LoadingSpinner";
+import { AuthContext } from "../shared/context/auth-context";
+import { useForm } from "../shared/hooks/form-hook";
+import { HTTP_METHODS, useFetch } from "../shared/hooks/UseFetch";
+import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../shared/util/validators";
 
-import Card from "../../shared/components/UIElements/Card";
-import Input from "../../shared/components/FormElements/Input";
-import Button from "../../shared/components/FormElements/Button";
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_REQUIRE,
-} from "../../shared/util/validators";
-import { useForm } from "../../shared/hooks/form-hook";
-import { AuthContext } from "../../shared/context/auth-context";
 import "./Auth.css";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import { HTTP_METHODS, useFetch } from "../../shared/hooks/UseFetch";
-import { getEndPoint, UserAPIs } from "../../api/api";
 
 enum AppState {
   SIGN_UP = "Sign up",

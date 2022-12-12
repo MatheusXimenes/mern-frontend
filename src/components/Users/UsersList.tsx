@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 import { IUser } from "../../models/UserModel";
 import UserItem from "./UserItem";
-import Card from "../../shared/components/UIElements/Card";
+import Card from "../UIElements/Card";
 
 import "./UsersList.css";
 

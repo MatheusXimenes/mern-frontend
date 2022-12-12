@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import PlaceList from "../components/Places/PlaceList";
 
-import PlaceList from "../components/PlaceList";
 type Params = {
   userId: string
 }

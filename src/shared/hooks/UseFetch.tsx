@@ -70,6 +70,7 @@ export function useFetch() {
 
     useEffect(() => {
       return () => {
+        /* eslint-disable*/
         controllers.current.forEach((controller) => controller.abort());
       }
     }, [])
