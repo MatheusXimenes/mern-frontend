@@ -7,10 +7,10 @@ import Card from "../UIElements/Card";
 import "./UsersList.css";
 
 type UserListProps = {
-  users: IUser[]
-}
+  users: IUser[];
+};
 
-const UsersList: FC<UserListProps> = ({users}) => {
+const UsersList: FC<UserListProps> = ({ users }) => {
   if (users.length === 0) {
     return (
       <div className="center">

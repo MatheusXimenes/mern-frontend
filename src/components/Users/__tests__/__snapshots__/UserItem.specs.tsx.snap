@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UserItem/> Component Snapshot Default Variant 1`] = `
+<li
+  className="user-item"
+>
+  <div
+    className="card user-item__content"
+  >
+    <a
+      href="/1/places"
+      onClick={[Function]}
+    >
+      <div
+        className="user-item__image"
+      >
+        <div
+          className="avatar undefined"
+        >
+          <img
+            alt="John Doe"
+            src="https://images.pexels.com/photos/6530613/pexels-photo-6530613.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            style={
+              Object {
+                "height": undefined,
+                "width": undefined,
+              }
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="user-item__info"
+      >
+        <h2>
+          John Doe
+        </h2>
+        <h3>
+          3
+           
+          Places
+        </h3>
+      </div>
+    </a>
+  </div>
+</li>
+`;
