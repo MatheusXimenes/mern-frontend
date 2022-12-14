@@ -19,6 +19,7 @@
     "start": "env-cmd -f .env.local react-scripts start",
     "build": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
+    "coverage": "set CI=true && react-scripts test --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,5 +47,25 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/react-test-renderer": "^18.0.0",
     "prettier": "2.7.1"
+  },
+  "nyc": {
+    "all": true,
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 99,
+    "statements": 99,
+    "functions": 99,
+    "branches": 99,
+    "cwd": "../",
+    "exclude": [
+      "./src/api/**.*"
+    ]
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "src/api",
+      "src/models",
+      "src/index.js"
+    ]
   }
 }

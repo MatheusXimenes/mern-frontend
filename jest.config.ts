@@ -1,7 +1,7 @@
 const config = {
   verbose: true,
   "setupFilesAfterEnv": [
-    "./setupTests.ts"
+    "setupTests.ts"
   ]
 };
 
