@@ -2,13 +2,13 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import PlaceList from "../components/Places/PlaceList";
 
-type Params = {
-  userId: string
-}
+type RouteParams = {
+  userId: string;
+};
 
 const dummy_places = [
   {
-    id: "p1",
+    _id: "p1",
     title: "Empire State Building",
     description: "One of the most famous sky scrapers in the world!",
     imageUrl:
@@ -21,7 +21,7 @@ const dummy_places = [
     creator: "u1",
   },
   {
-    id: "p2",
+    _id: "p2",
     title: "Emp. State Building",
     description: "One of the most famous sky scrapers in the world!",
     imageUrl:
@@ -36,9 +36,9 @@ const dummy_places = [
 ];
 
 const UserPlaces = () => {
-  const userId = useParams<Params>().userId;
+  const userId = useParams<RouteParams>().userId;
   const loadedPlaces = dummy_places.filter((place) => place.creator === userId);
-  return <PlaceList items={loadedPlaces} />;
+  return <PlaceList places={loadedPlaces} />;
 };
 
 export default UserPlaces;

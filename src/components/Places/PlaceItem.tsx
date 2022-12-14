@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { FC, useState, useContext } from "react";
 
 import Card from "../UIElements/Card";
 import Button from "../FormElements/Button";
@@ -6,8 +6,16 @@ import Modal from "../UIElements/Modal";
 import Map from "../UIElements/Map";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./PlaceItem.css";
+import { IPlaces } from "../../models/PlaceModel";
 
-const PlaceItem = (props) => {
+const PlaceItem: FC<IPlaces> = ({
+  address,
+  location,
+  imageUrl,
+  title,
+  description,
+  _id,
+}) => {
   const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -34,13 +42,13 @@ const PlaceItem = (props) => {
       <Modal
         show={showMap}
         onCancel={closeMapHandler}
-        header={props.address}
+        header={address}
         contentClass="place-item__modal-content"
         footerClass="place-item__modal-actions"
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
         <div className="map-container">
-          <Map center={props.coordinates} zoom={16} />
+          <Map center={location} zoom={16} />
         </div>
       </Modal>
       <Modal
@@ -66,21 +74,19 @@ const PlaceItem = (props) => {
       </Modal>
       <li className="place-item">
         <Card className="place-item__content">
-          <div className="place-item__image">
-            <img src={props.image} alt={props.title} />
+          <div className="place-item__imageUrl">
+            <img src={imageUrl} alt={title} />
           </div>
           <div className="place-item__info">
-            <h2>{props.title}</h2>
-            <h3>{props.address}</h3>
-            <p>{props.description}</p>
+            <h2>{title}</h2>
+            <h3>{address}</h3>
+            <p>{description}</p>
           </div>
           <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>
               VIEW ON MAP
             </Button>
-            {auth.isLoggedIn && (
-              <Button to={`/places/${props.id}`}>EDIT</Button>
-            )}
+            {auth.isLoggedIn && <Button to={`/places/${_id}`}>EDIT</Button>}
 
             {auth.isLoggedIn && (
               <Button danger onClick={showDeleteWarningHandler}>

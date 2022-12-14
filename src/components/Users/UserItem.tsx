@@ -1,20 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import Avatar from '../UIElements/Avatar';
-import Card from '../UIElements/Card';
-import './UserItem.css';
+import Avatar from "../UIElements/Avatar";
+import Card from "../UIElements/Card";
+import "./UserItem.css";
 
 type userItemProps = {
-  id: number,
-  image: string,
-  name: string,
-  placeCount: number
-}
+  id: number;
+  image: string;
+  name: string;
+  placeCount: number;
+};
 
-const UserItem = (props:userItemProps) => {
+const UserItem = (props: userItemProps) => {
   return (
-    <li className="user-item">
+    <li className="user-item" data-testid={props.id}>
       <Card className="user-item__content">
         <Link to={`/${props.id}/places`}>
           <div className="user-item__image">
@@ -23,7 +23,7 @@ const UserItem = (props:userItemProps) => {
           <div className="user-item__info">
             <h2>{props.name}</h2>
             <h3>
-              {props.placeCount} {props.placeCount === 1 ? 'Place' : 'Places'}
+              {props.placeCount} {props.placeCount === 1 ? "Place" : "Places"}
             </h3>
           </div>
         </Link>

@@ -1,15 +1,12 @@
-import { IUser } from "./UserModel";
-
 export interface IPlaces {
     _id: string,
     title: string,
     description: string,
-    imageUrl:
-    string,
+    imageUrl: string,
     address: string,
     location: {
       lat: number,
       lng: number,
     },
-    creator: IUser["_id"][],
+    creator: string,
 }

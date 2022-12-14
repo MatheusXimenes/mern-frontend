@@ -1,6 +1,8 @@
-import React, { render, screen } from "@testing-library/react";
+import React, { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
 import renderer from "react-test-renderer";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as BRouter, Router, Route } from "react-router-dom";
+import { createMemoryHistory } from "history";
 import UserItem from "../UserItem";
 
 const userItemProps = {
@@ -11,11 +13,11 @@ const userItemProps = {
   placeCount: 3,
 };
 
-describe("<UserItem/> Component", () => {
-  describe("Render", () => {
-    it("Should render Link Element", () => {
+describe("UserItem Component", () => {
+  describe("Rendering Elements", () => {
+    it("Should has one h2 element", () => {
       render(
-        <Router>
+        <BRouter>
           <Route>
             <UserItem
               id={userItemProps.id}
@@ -24,17 +26,79 @@ describe("<UserItem/> Component", () => {
               placeCount={userItemProps.placeCount}
             />
           </Route>
+        </BRouter>
+      );
+      const headingEl = screen.getByRole("heading", {
+        level: 2,
+        name: userItemProps.name,
+      });
+      expect(headingEl).toBeInTheDocument();
+    });
+
+    it("Should has one h3 element", () => {
+      render(
+        <BRouter>
+          <Route>
+            <UserItem
+              id={userItemProps.id}
+              image={userItemProps.image}
+              name={userItemProps.name}
+              placeCount={userItemProps.placeCount}
+            />
+          </Route>
+        </BRouter>
+      );
+      const headingEl = screen.getByRole("heading", {
+        level: 3,
+        name: `${userItemProps.placeCount} Places`,
+      });
+      expect(headingEl).toBeInTheDocument();
+    });
+
+    it("Should have one link", () => {
+      render(
+        <BRouter>
+          <Route>
+            <UserItem
+              id={userItemProps.id}
+              image={userItemProps.image}
+              name={userItemProps.name}
+              placeCount={userItemProps.placeCount}
+            />
+          </Route>
+        </BRouter>
+      );
+      const linkEl = screen.getByRole("link");
+      expect(linkEl).toBeInTheDocument();
+    });
+  });
+
+  describe("Features", () => {
+    it("Clicking on Link, should navigate to Places Page", async () => {
+      const history = createMemoryHistory();
+      history.push = jest.fn();
+
+      render(
+        <Router history={history}>
+          <UserItem
+            id={userItemProps.id}
+            image={userItemProps.image}
+            name={userItemProps.name}
+            placeCount={userItemProps.placeCount}
+          />
         </Router>
       );
-      const link = screen.getByRole("link");
-      expect(link).not.toBeNull();
+      const linkEl = screen.getByRole("link");
+      fireEvent.click(linkEl);
+
+      expect(history.push).toHaveBeenCalledWith(`/${userItemProps.id}/places`);
     });
   });
 
   describe("Snapshot", () => {
     it("Default Variant", () => {
       const tree = renderer.create(
-        <Router>
+        <BRouter>
           <Route>
             <UserItem
               id={userItemProps.id}
@@ -43,7 +107,7 @@ describe("<UserItem/> Component", () => {
               placeCount={userItemProps.placeCount}
             />
           </Route>
-        </Router>
+        </BRouter>
       );
       expect(tree).toMatchSnapshot();
     });

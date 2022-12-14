@@ -11,6 +11,10 @@ import {
 import { useForm } from "../shared/hooks/form-hook";
 import "./PlaceForm.css";
 
+type RouteParams = {
+  placeId: string;
+};
+
 const dummy_places = [
   {
     id: "p1",
@@ -41,8 +45,8 @@ const dummy_places = [
 ];
 
 const UpdatePlace = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const placeId = useParams().placeId;
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const placeId = useParams<RouteParams>().placeId;
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -79,7 +83,7 @@ const UpdatePlace = () => {
     setIsLoading(false);
   }, [setFormData, identifiedPlace]);
 
-  const placeUpdateSubmitHandler = (event) => {
+  const placeUpdateSubmitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
     console.log(formState.inputs);
   };

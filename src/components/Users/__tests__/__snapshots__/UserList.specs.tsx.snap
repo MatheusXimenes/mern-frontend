@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserList Component ScreenShot List of UserItems 1`] = `
+<ul
+  className="users-list"
+>
+  <li
+    className="user-item"
+    data-testid={1}
+  >
+    <div
+      className="card user-item__content"
+    >
+      <a
+        href="/1/places"
+        onClick={[Function]}
+      >
+        <div
+          className="user-item__image"
+        >
+          <div
+            className="avatar undefined"
+          >
+            <img
+              alt="Matheus"
+              src="Url"
+              style={
+                Object {
+                  "height": undefined,
+                  "width": undefined,
+                }
+              }
+            />
+          </div>
+        </div>
+        <div
+          className="user-item__info"
+        >
+          <h2>
+            Matheus
+          </h2>
+          <h3>
+            0
+             
+            Places
+          </h3>
+        </div>
+      </a>
+    </div>
+  </li>
+</ul>
+`;
+
+exports[`UserList Component ScreenShot No Users Found Warning 1`] = `
+<div
+  className="center"
+>
+  <div
+    className="card undefined"
+  >
+    <h2>
+      No users found.
+    </h2>
+  </div>
+</div>
+`;

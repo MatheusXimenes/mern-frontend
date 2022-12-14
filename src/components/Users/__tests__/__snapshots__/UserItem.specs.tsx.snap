@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<UserItem/> Component Snapshot Default Variant 1`] = `
+exports[`UserItem Component Snapshot Default Variant 1`] = `
 <li
   className="user-item"
+  data-testid={1}
 >
   <div
     className="card user-item__content"

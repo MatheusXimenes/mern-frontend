@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 
 import Input from "../components/FormElements/Input";
 import Button from "../components/FormElements/Button";
@@ -28,7 +28,7 @@ const NewPlace = () => {
     false
   );
 
-  const placeSubmitHandler = (event) => {
+  const placeSubmitHandler = (event: SyntheticEvent) => {
     event.preventDefault();
     console.log(formState.inputs); // send this to the backend!
   };
